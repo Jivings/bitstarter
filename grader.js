@@ -58,12 +58,12 @@ var checkHtmlFile = function(htmlfile, checksfile) {
 };
 
 var checkUrl = function (url, checksfile, callback) {
-  var request = restler.request(url);
+  var request = restler.get(url);
   var checks = loadChecks(checksfile).sort();
 
   request.on('success', function(response) {
+    $ = cheerio.load(response);
     var out = {};
-    console.log(response);
      for(var ii in checks) {
         var present = $(checks[ii]).length > 0;
         out[checks[ii]] = present;
